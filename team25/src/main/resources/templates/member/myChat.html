@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head th:replace="~{layout/head.html :: head}">
+
+        <title>티셀파::나의채팅방</title>
+    </head>
+<body>
+<div th:insert="~{layout/header :: header}"></div>
+<div class="container contents">
+    <h1><i class="fa-regular fa-message" style="color: #c80023;"></i>채팅</h1>
+        <div class="row">
+            <div id="chatRoom" class="col-6">
+                <section>
+                    <div>
+                        <div class="col">
+                            <div class="card" style="border-radius: 15px;">
+                                <div style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                                    <p class="mb-0 fw-bold" id="roomName" th:text="${roomName}+'님과의 대화'" style="font-size: 30px" />
+                                    <input type="hidden" id="roomNo" th:value="${room.roomNo}">
+                                </div>
+                                <div class="card-body">
+                                    <div id="msgArea" style=" height: 600px; overflow-y: auto;">
+                                        <th:block th:each="c : ${chats}">
+                                            <div th:if="${c.sender eq roomName}">
+                                                <!-- 상대방이 보낸 채팅일 때 왼쪽에 뜨게-->
+                                                <div id="chat-box-sender" style="text-align: left;">
+                                                    <div th:text="${c.sender}" style="font-size: 18px; margin-bottom: 10px; ">
+                                                        <p th:text="${c.time}" style="display: inline;margin-left: 10px;color: gray;font-size: 10px;"/></div>
+                                                    <div style="width:70%; background-color: #575757; color: #FFF; border-radius: 20px; font-size: 24px; padding: 10px 20px; width: 70%; margin-right: auto;">
+                                                        <p th:text="${c.message}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${c.sender != roomName}">
+                                                <!--내가 보낸 채팅일 때 오른쪽에 뜨게-->
+                                                <div id="chat-box-receiver" style="text-align: right;">
+                                                    <div th:text="${c.sender}" style="font-size: 18px; margin-bottom: 10px; ">
+                                                        <p th:text="${c.time}" style="display: inline;margin-left: 10px;color: gray;font-size: 14px;"/></div>
+                                                    <div style="width:70%; background-color: #cf213f; color: #FFF; border-radius: 20px; font-size: 24px; padding: 10px 20px; width: 70%; margin-left: auto;">
+                                                        <p class="chat-message" th:text="${c.message}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th:block>
+                                    </div>
+                            </div>
+                                    <div><textarea class="form-control" id="chat-input" placeholder="상대에게 전할 메세지를 적어주세요!" aria-label="chat input" rows="3" style="font-size: 20px"></textarea>
+                                    <button class="btn btn-dark" id="chat-send">입력</button></div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<script th:inline="javascript">
+    let roomNo = /*[[${room.roomNo}]]*/ 'default';
+    let roomName = /*[[${roomName}]]*/ 'default';
+    console.log(roomName);
+
+    let ws;
+
+    // 사용자 이름 설정. session에 저장된 이름
+    let username = /*[[${userId}]]*/ 'default';
+    console.log(username)
+    if (username === "null") {
+        username = "guest";
+    }
+
+
+    // 자동 스크롤 함수
+    function scrollToBottom() {
+        var chatDiv = document.getElementById("msgArea");
+        chatDiv.scrollTop = chatDiv.scrollHeight;
+    }
+
+    // Ctrl 에서 ObjectMapper 를 사용하여 ChatMessage 형태로 바꾸므로, chat 필드를 가진 json 으로 만들어 보내기
+    function makeChat(chatNo, type, room, username, message){
+        var currentTime = new Date();
+        var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+        var time = new Intl.DateTimeFormat('ko-KR', options).format(currentTime);
+
+        let chat = {
+            "chatNo": chatNo,
+            "receiver": roomName,
+            "type": type,
+            "roomNo": room,
+            "sender": username,
+            "message": message,
+            "time": time
+        };
+
+        var jsonstr = JSON.stringify(chat)
+        console.log(jsonstr);
+        return jsonstr;
+    }
+
+    function send(jsonstr){
+        ws.send(jsonstr);
+        console.log(jsonstr);
+    }
+
+    $(document).ready(function(){
+        ws = new WebSocket("ws://"+location.host+"/socket?roomNo="+roomNo);
+
+        ws.onopen = function(e){ // 연결 시 실행
+            /*var str = username + "님이 입장하셨습니다.";
+            send(makeChat("ENTER", roomNo, username, str));*/
+            // console.log("info : connection opened.");
+            console.log(username + "님이 입장하셨습니다.");
+        }
+
+        ws.onmessage = function(response){ // 서버로부터 메세지를 받았을 때 실행
+            console.log("message");
+
+            $.ajax({
+                type: "POST",
+                url: "/team25/chat/readChat",
+                data: {message: response.data, user: username},
+                success: function (data) {
+                }
+            });
+
+            var msg = JSON.parse(response.data);
+
+            if(msg.roomNo===roomNo){
+                let newMsg = ``;
+
+                if(msg.type==="TALK"){
+                    // 일반 대화
+                    if(msg.sender===username){
+                        newMsg = `<div class="d-flex flex-row justify-content-end mb-4">
+                                                        <div class="chat-box text-end">
+                                                            <div class="chat-author m-0 p-1">${msg.sender}<p class="chat-time">${msg.time}</p></div>
+                                                            <div class="p-3 chat-message-me">
+                                                                <p class="chat-message small mb-0">${msg.message}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>`;
+                    } else{
+                        newMsg = `<div class="d-flex flex-row justify-content-start mb-4">
+                                                        <div class="chat-box">
+                                                            <div class="chat-author m-0 p-1">${msg.sender}<p class="chat-time">${msg.time}</p></div>
+                                                            <div class="p-3 chat-message-other">
+                                                                <p class="chat-message small mb-0">${msg.message}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>`;
+                    }
+
+                } else {
+                    // 입장, 퇴장 알림
+                    newMsg = `<div class="d-flex flex-row justify-content-center mb-4"><div class="chat-box">${msg.message}</div></div>`
+                }
+
+                $("#msgArea").append(newMsg);
+                scrollToBottom();
+
+            }
+        }
+
+        ws.onclose = function(e){ // 연결 종료 시 실행
+            console.log("info : connection closed");
+        };
+
+        ws.onerror = function(e){
+            console.log("error")
+            console.log(e);
+        };
+    })
+
+
+    $("#chat-send").on("click", function() {
+        let msg = $("#chat-input").val();
+
+        if(msg===""){
+            return false;
+        } else {
+            // 일단 데이터베이스 채팅 저장
+            var jsonstr = makeChat(0, "TALK", roomNo, username, msg);
+            // ws.send(jsonstr);
+            $.ajax({
+                type: "POST",
+                url: "/team25/chat/insertChat",
+                data: {message: jsonstr},
+                success: function (response) {
+                    // 데이터베이스에 채팅이 제대로 저장된 경우에만 send
+                    // 삭제를 하고 싶어서. chatNo가 필요.
+                    send(makeChat(response.chatNo, "TALK", roomNo, username, msg));
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
+        }
+
+        $("#chat-input").val("");
+    });
+
+
+    window.addEventListener('beforeunload', async function (e) {
+        await closeRoom();
+        // 페이지를 떠날 때 실행할 함수
+    });
+</script>
+</html>

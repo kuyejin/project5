@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!--layout:decorate -> 만들 것을 사용할 때 사용-->
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>아이템 상세보기</title>
+
+
+    <!--부트스트랩-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+
+     <!--제이쿼리-->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+</head>
+
+<body>
+
+    <header class="header" id="hd">
+        <div th:insert="~{layout/header :: header}"></div>
+    </header>
+
+    <br> <!-- ---------------------------------------------------------------  -->
+
+
+
+
+    <div class="contents" style="clear:both;width:100%;padding-top:100px;">
+        <div class="splash-container" style="clear:both;padding:40px;padding-top:150px;">
+
+            <h2 style="border-bottom:2px solid #333;" class="title">아이템 목록</h2>
+
+            <div class="">
+                <button type="buttion" class="button" th:onclick="|location.href='@{/item/add}'|">아이템 추가</button>
+            </div>
+
+            <div class ="item-area">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>상품명</th>
+                        <th>가격</th>
+                        <th>수량</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${itemList}">
+                        <td th:text="${item.id}"></td>
+                        <td><a th:href="@{/templates/product/get/${item.id}}">[[${item.itemName}]]</a></td>
+                        <td th:text="${item.price}"></td>
+                        <td th:text="${item.quantity}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <br> <!-- ---------------------------------------------------------------  -->
+
+    <footer class="footer" id="ft">
+        <div th:insert="~{layout/footer :: footer}"></div>
+    </footer>
+
+
+    <script th:inline="javascript">
+
+            function inputData() {
+                var book = $("#form").serialize();
+                $.ajax({
+                    url: "/team25/ex/test5",
+                    data: book,
+                    type: "POST",
+                    cache: false
+                }).done(function (fragment) {
+                    if ($(fragment).find($("#form").length > 0)) {
+                        $("#form").replaceWith(fragment);
+                    } else {
+                        $("#list").replaceWith(fragment);
+                        $("input[type=text]").val("");
+                        $(".err").text("");
+                    }
+                });
+            }
+
+    </script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</body>
+</html>

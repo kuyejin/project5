@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="~{layout/admin/head.html :: head}">
+    <title> 회원 상세보기 </title>
+    <style>
+     tbody .bd{
+            border: #1e2125 solid 2px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body class="sb-nav-fixed">
+<header class="header" id="hd">
+    <div th:insert="~{layout/admin/header :: header}"></div>
+</header>
+<div class="side" id="side">
+    <div th:insert="~{layout/admin/sidebar :: #layoutSidenav}"></div>
+</div>
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4" style="width: 700px; height: 700px; margin-top: 80px;">
+            <h2 class="title">회원 상세보기</h2>
+        <table class="table table-borderless form-control">
+            <tbody>
+            <tr>
+                <th>이름</th>
+                <td th:text="${user.userName}"></td>
+            </tr>
+            <tr>
+                <th>아이디</th>
+                <td th:text="${user.userId}"></td>
+            </tr>
+            <tr>
+                <th>비밀번호</th>
+                <td th:text="${user.password}"></td>
+            </tr>
+            <tr>
+                <th>계정 상태</th>
+                <td th:text="${user.active}"></td>
+            </tr>
+            <tr>
+                <th>계정 권한</th>
+                <td th:text="${user.roleName}"></td>
+            </tr>
+            <tr>
+                <th>이메일</th>
+                <td th:text="${user.email}"></td>
+            </tr>
+            <tr>
+                <th>전화번호</th>
+                <td th:text="${user.tel}"></td>
+            </tr>
+            <tr>
+                <th>우편번호</th>
+                <td th:text="${user.postcode}"></td>
+            </tr>
+            <tr>
+                <th>기본 주소</th>
+                <td th:text="${user.addr1}"></td>
+            </tr>
+            <tr>
+                <th>상세 주소</th>
+                <td th:text="${user.addr2}"></td>
+            </tr>
+            <tr>
+                <th>등록일</th>
+                <td th:text="${user.regdate}"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a th:href="@{'/admin/update/'+${user.id}}" class="btn btn-outline-dark">수정하기</a>
+                    <a th:href="@{'/admin/home/'}" class="btn btn-outline-secondary">메인으로</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en">
+
+<!-- head include-->
+<head th:replace="~{layout/head.html :: head}">
+    <title> 상품 관리 </title>
+
+    <style>
+
+
+        .content {
+            width: 900px;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .font {
+            text-algin: left;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        #check11, #check12, #check13, #check14, #check15, #check16, #check17,
+        #check21, #check22, #check23, #check24, #check25, #check26, #check27 {
+            width: 264px;
+            height: 48px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0);
+            border: 1px solid skyblue;
+            color: skyblue;
+            padding: 5px;
+            border-radius: 5px;
+            align-self: center;
+        }
+
+        #check11:hover, #check12:hover, #check13:hover, #check14:hover, #check15:hover, #check16:hover, #check17:hover,
+        #check21:hover, #check22:hover, #check23:hover, #check24:hover, #check25:hover, #check26:hover, #check27:hover {
+            color: white;
+            background-color: skyblue;
+        }
+
+        .origin {
+            width: 70px;
+            height: 30px;
+            border-radius: 5px;
+            border: none;
+            background-color: #efefef;
+
+        }
+
+        table {
+            width: 500px;
+            margin: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border-top: 1px solid #c2c2d6;
+            border-collapse: collapse;
+            border-radius: 5px;
+        }
+
+        table > thead > th > th {
+            background-color: #f7f7f7;
+        }
+
+        table > tbody > tr > td {
+            padding: 5px;
+            height: 50px;
+            border-bottom: 1px solid #eeeeee;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        input {
+            font-family: 'Noto Sans KR', sans-serif;
+            outline: 0;
+            display: block;
+            width: 250px;
+            height: 40px;
+            font-size: 1em;
+            border: 1px solid #efefef;
+            border-radius: 5px;
+        }
+
+        #same {
+            margin-left: 220px;
+        }
+
+        .error11, .error12, .error13, .error14, .error15, .error16, .error17,
+        .error21, .error22, .error23, .error24, .error25, .error26, .error27 {
+            font-size: 0.9em;
+            color: red;
+            padding-left: 190px;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+
+        #ud_tab {
+            /*max-width: 900px;
+         width: 90%;
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         background: #fff;
+         height: 300px;*/
+            /*height: 300px;*/
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        #ud_tab input[type="radio"] {
+            display: none;
+        }
+
+        #ud_tab label {
+            display: block;
+            float: left;
+            width: 150px;
+            color: #000000;
+            font-size: 20px;
+            padding: 3%;
+            font-weight: normal;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            background: #ffffff;
+        }
+
+        #ud_tab .ud_content {
+            background: #fff;
+            width: 100%;
+            display: none;
+            padding: 5%;
+            float: left;
+        }
+
+        #ud_tab [id^="tab"]:checked + label {
+            border-bottom: 3px solid skyblue;
+            background: #ffffff;
+            color: #000000;
+        }
+
+        #tab1:checked ~ #ud_tab-content1,
+        #tab2:checked ~ #ud_tab-content2,
+        #tab3:checked ~ #ud_tab-content3,
+        #tab4:checked ~ #ud_tab-content4,
+        #tab5:checked ~ #ud_tab-content5,
+        #tab6:checked ~ #ud_tab-content6 {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-top: 1px solid #c2c2d6;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border-bottom: 1px solid #c2c2d6;
+            padding: 10px;
+            height: 50px;
+        }
+
+    </style>
+</head>
+
+<body>
+<!-- header include-->
+<header class="header" id="hd">
+    <div th:insert="~{layout/header :: header}"></div>
+</header>
+
+<!--contens 필수-->
+<div class="contents">
+    <div class="container ">
+
+
+
+            <!--상품 관리-->
+            <div id="ud_tab-content2" class="ud_content">
+                <h3> 나의 구매 내역 </h3>
+                <div class="page_wrap">
+                    <h2 class="page_tit"></h2>
+                    <table class="table text-center">
+                        <thead >
+                        <tr>
+                            <th class="text-center">사진</th>
+                            <th class="text-center">배송현황</th>
+                            <th class="text-center">상품명</th>
+                            <th class="text-center">가격</th>
+                            <th class="text-center">구매일</th>
+                            <th class="text-center">비고</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="pay: ${myPayList}">
+                            <td>
+                                <div class="img_tit">
+                                    <a th:href="@{'/product/getProduct/' + ${pay.pno}}">
+                                        <img th:src="@{'/upload/' + ${pay.imgsrc1}}" alt="" style="    width: 150px;">
+                                    </a>
+                                </div>
+                            </td>
+
+                            <td>
+                                <p th:text="${pay.ship == 1 ? '배송전' : (pay.ship == 2 ? '배송중' : (pay.ship == 3 ? '배송완료' : '거래종료'))}"></p>
+                            </td>
+
+                            <td>
+                                <p th:text="${pay.pname}"></p>
+                            </td>
+
+
+
+                            <td>
+                                <p th:text="${pay.price}"></p>
+                            </td>
+
+                            <td>
+                                <p th:text="${pay.resdate}"></p>
+                            </td>
+
+                            <td>
+
+                                <div class="btn_group">
+                                    <a class="add-to-cart-btn" th:href="@{'/pay/payComplete/' + ${pay.pno}+'/'+${pay.payNo}}">구매확정</a>
+                                    <a th:href="@{'/product/UpdateProduct/' + ${pro.pno}}">수정</a>
+                                    <a th:href="@{'/product/DeleteProduct/' + ${pro.pno}}">삭제</a>
+                                </div>
+                            </td>
+
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
+
+            <!--구매/판매 내역-->
+            <div id="ud_tab-content3" class="ud_content">
+
+
+            </div>
+
+
+            <!--스페어-->
+            <div id="ud_tab-content4" class="ud_content">
+
+
+            </div>
+
+
+            <!--스페어-->
+            <div id="ud_tab-content5" class="ud_content">
+
+
+            </div>
+
+
+
+
+    </div>
+</div>
+
+<!--footer include--->
+<footer class="footer" id="ft">
+    <div th:insert="~{layout/footer :: footer}"></div>
+</footer>
+
+<!-- script 사용시-->
+<th:block layout:fragment="script">
+
+</th:block>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:www.thymeleaf.org">
+<head th:replace="~{layout/admin/head.html :: head}">
+    <title> 회원 상세보기 </title>
+</head>
+<body>
+<div class="content">
+    <div class="container">
+        <form th:action="@{'/admin/editRole/'+${userRole.id}}">
+            <table class="table">
+                <tr>
+                    <th>회원권한</th>
+                    <td>
+                        <select name="roleId" id="roleId">
+                            <option value="${userRole.roleId}">
+                                <th:block th:switch="${userRole.roleId}">
+                                    <em th:case="2">TEACHER</em>
+                                    <em th:case="5">USER</em>
+                                </th:block>
+                            </option>
+                            <option value="2">TEACHER</option>
+                            <option value="5">USER</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

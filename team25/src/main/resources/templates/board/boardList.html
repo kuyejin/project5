@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<!-- head include-->
+<head th:replace="~{layout/head.html :: head}">
+    <title> 공지사항 </title>
+</head>
+
+
+<body>
+<!-- header include-->
+<header class="header" id="hd">
+    <div th:insert="~{layout/header :: header}"></div>
+</header>
+
+<!--contens 필수-->
+<div class="contents">
+    <div class="container ">
+
+            <!--상품 관리-->
+            <div id="ud_tab-content2" class="ud_content">
+                <div class="page_wrap">
+                    <h2 class="page_tit">공지사항</h2>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">번호</th>
+                            <th scope="col">제목</th>
+                            <th scope="col">등록일</th>
+                            <th scope="col">조회수</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="board: ${boardList}">
+                            <th scope="row" th:text="${board.bno}"></th>
+                                <td>
+                                    <a th:href="@{'/board/getBoard/' + ${board.bno}}" >
+                                    <p th:text="${board.title}"></p>
+                                    </a>
+                                </td>
+                            <td th:text="${board.resdate}"></td>
+                            <td th:text="${board.visited}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn_group">
+                        <a sec:authorize="hasAuthority('ADMIN')"  th:href="@{'/board/insertBoard'}" class="btn btn-primary">글쓰기</a>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+</div>
+
+<!--footer include--->
+<footer class="footer" id="ft">
+    <div th:insert="~{layout/footer :: footer}"></div>
+</footer>
+
+<!-- script 사용시-->
+<th:block layout:fragment="script">
+
+</th:block>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.ReviewMapper">
+
+
+    <insert id="insertReview">
+        insert into review values(default, #{id}, #{content}, default, #{score}, #{pno})
+    </insert>
+
+    <select id="getProReview" resultType="com.shop.domain.Review">
+        select * from review where pno=#{pno} and id=#{id}
+    </select>
+
+    <select id="proReview" resultType="com.shop.domain.Review">
+        SELECT p.pname, p.imgsrc1, p.seller, r.pno, r.no, r.id, r.content, r.resdate, r.score from review r,product p where r.id=#{id} AND r.pno = p.pno;
+    </select>
+
+
+    <select id="proSellerReview" resultType="com.shop.domain.Review">
+        SELECT p.pname, p.imgsrc1, r.id, r.pno, r.no, r.id, r.content, r.resdate, r.score from review r,product p WHERE p.seller=#{seller} AND r.pno = p.pno;
+    </select>
+
+
+    <select id="reviewCheck" resultType="Integer">
+        select count(*) from review where pno=#{pno} and id=#{id}
+    </select>
+
+
+
+</mapper>
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="~{layout/admin/head.html :: head}">
+    <title>관리자페이지</title>
+</head>
+<body class="sb-nav-fixed">
+<header class="header" id="hd">
+    <div th:insert="~{layout/admin/header :: header}"></div>
+</header>
+<div class="side" id="side">
+    <div th:insert="~{layout/admin/sidebar :: #layoutSidenav}"></div>
+</div>
+<div id="layoutSidenav_content">
+    <main>
+<div class="container-fluid px-4" style="margin-left: 226px; margin-top: 59px; width: 1668px;">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>회원 성함</th>
+            <th>회원 아이디</th>
+            <th>활동 상태</th>
+            <th>권한</th>
+            <th>등록일</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="userList : ${userList}">
+            <td th:text="${userList.id}"></td>
+            <td th:text="${userList.userName}"></td>
+            <td th:text="${userList.userId}"></td>
+            <td th:text="${userList.active}"></td>
+            <td th:text="${userList.roleName}"></td>
+            <td th:text="${userList.regdate}"></td>
+            <td>
+                <a th:href="@{'/admin/userDetail/' + ${userList.id}}" class="btn">상세보기</a>
+                <a th:href="@{'/admin/editActive/' + ${userList.id}}" class="btn">회원 강퇴</a>
+                <a th:href="@{'/admin/editRole/' + ${userList.id}}" class="btn">권한 변경</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+    </main>
+</div>
+</body>
+</html>

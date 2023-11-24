@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en">
+
+<!-- head include-->
+<head th:replace="~{layout/head.html :: head}">
+    <title>제목</title>
+
+    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
+</head>
+
+
+<body>
+<!-- header include-->
+<header class="header" id="hd">
+    <div th:insert="~{layout/header :: header}"></div>
+</header>
+
+<!--contens 필수-->
+<div class="contents">
+
+
+    <div class="container" style="width: 60%;" th:with="product=${product}">
+        <form th:action="@{'/product/updateProduct/' + ${product.pno}}" method="post" enctype="multipart/form-data">
+
+           <h2>상품 수정</h2>
+
+            <table class="table" >
+
+                <tbody>
+                <tr>
+                    <th>상품 이미지</th>
+                    <td colspan="2"><input type="file" name="imgFile" id="imgsrc1" class="input" placeholder="이미지1" accept=".jpg, .png" required></td>
+                </tr>
+                <tr>
+                    <th>상품 이미지2</th>
+                    <td colspan="2"><input type="file" name="imgFile" id="imgsrc2" class="input" placeholder="이미지2" accept=".jpg, .png" required></td>
+                </tr>
+                <tr>
+                    <th>상품 이미지 3</th>
+                    <td colspan="2"><input type="file" name="imgFile" id="imgsrc3" class="input" placeholder="이미지3" accept=".jpg, .png" required></td>
+                </tr>
+                <tr>
+                    <th>상품 이미지 4</th>
+                    <td colspan="2"><input type="file" name="imgFile" id="imgsrc4" class="input" placeholder="이미지4" accept=".jpg, .png" required></td>
+                </tr>
+
+                <tr>
+                    <th>상품명</th>
+                    <td colspan="2"><input type="text" name="pname" id="pname" class="input" th:value="${product.getPname()}" required></td>
+                </tr>
+
+
+
+                <tr>
+                    <th>카테고리</th>
+                    <td colspan="2">
+                        <select  name="cateno" id="cateno" class="select is-fullwidth" autofocus required>
+                            <option value="1" selected>초등서적</option>
+                            <option value="2">중등서적</option>
+                            <option value="3">고등서적</option>
+                        </select>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <th>상품상태</th>
+                    <!--<td th:each="type : ${itemTypes}" class="form-check form-check-inline">>
+                        <input type="radio" th:field="*{itemType}" th:value="${type.name()}"
+                               class="form-check-input">
+                        <label th:for="${#ids.prev('itemType')}" th:text="${type.description}"
+                               class="form-check-label">
+                            BOOK
+                        </label>
+                    </td>-->
+                    <td>
+                    <div>
+                        <input type="radio" id="bestupper" name="quality " value="최상" />
+                        <label for="bestupper">
+                            <strong style="font-size: 15px;">새 상품 (미사용)</strong>
+                            &nbsp;&nbsp;사용하지 않은 새 상품
+                        </label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="upper" name="quality " value="상" />
+                        <label for="upper">
+                            <strong style="font-size: 15px;">사용감 없음</strong>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사용은 했지만 눈에 띄는 흔적이나 얼룩이 없음
+
+                        </label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="middle" name="quality " value="중" />
+                        <label for="middle">
+                            <strong style="font-size: 15px;">사용감 적음</strong>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;눈에 띄는 흔적이나 얼룩이 약간 있음
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="lower" name="quality " value="하" />
+                        <label for="lower">
+                            <strong style="font-size: 15px;">사용감 많음</strong>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;눈에 띄는 흔적이나 얼룩이 많이 있음
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="bestlower" name="quality " value="최하" />
+                        <label for="bestlower">
+                            <strong style="font-size: 15px;">고장/파손 상품</strong>
+                            &nbsp;&nbsp;&nbsp;기능 이상이나 외관 손상 등으로 수리/수선 필요
+                        </label>
+                    </div>
+                    </td>
+                </tr>
+
+                <tr >
+                    <th>가격</th>
+                    <td colspan="2" ><input type="number" name="price" id="price" class="input" th:value="${product.getPrice()}"  style="width: 50%" required></td>
+                </tr>
+
+
+                <tr>
+                    <th>설명</th>
+                   <td colspan="2"> <textarea name="pcomment" id="pcomment" cols="50" class="textarea" th:value="${product.getPcomment()}" rows="8" style="width: 100%"  required></textarea></td>
+                </tr>
+
+
+                <tr>
+                    <th>수량</th>
+                    <td colspan="2"><input type="number" name="quantity" id="quantity" class="input" th:value="${product.getQuantity()}" required></td>
+                </tr>
+
+
+
+
+                <!--                <tr>-->
+<!--                    <th>거래 장소</th>-->
+<!--                    <td colspan="2"><input type="text" name="" id="" class="input" placeholder="상품 이름 입력" required></td>-->
+<!--                </tr>-->
+
+
+
+                <!--<tr>
+                    <th>수강 대상</th>
+                    <td colspan="2">
+                        <select name="level1" id="level1" class="select is-fullwidth" autofocus required>
+                            <option value="초등학교" selected>초등서적</option>
+                            <option value="중학교">중등서적</option>
+                            <option value="고등학교">고등서적</option>
+                        </select>
+
+                        <select name="level2" id="level2" class="select is-fullwidth" autofocus required>&#45;&#45;%>
+                            <option value="1학년" id="op1" selected>1학년</option>
+                            <option value="2학년" id="op2">2학년</option>
+                            <option value="3학년" id="op3">3학년</option>
+                            <option value="4학년" id="op4">4학년</option>
+                            <option value="5학년" id="op5">5학년</option>
+                            <option value="6학년" id="op6">6학년</option>
+                        </select>
+
+                        <script>
+                            var c1 = document.getElementById("level1");
+                            var c2 = document.getElementById("level2");
+                            var op1 = document.querySelectorAll("#op1,#op2,#op3");
+                            var op2 = document.querySelectorAll("#op4,#op5,#op6");
+
+                            c1.addEventListener("change", function() {
+                                if (c1.value === "초등학교") {
+                                    op2.forEach(option => {
+                                        option.style.display = "block";
+                                    });
+                                } else {
+                                    op1.forEach(option => {
+                                        option.style.display = "block";
+                                    });
+
+                                    op2.forEach(option => {
+                                        option.style.display = "none";
+                                    });
+                                }
+                            });
+                        </script>
+                    </td>
+                </tr>-->
+
+
+
+
+                <tr>
+                    <td colspan="2">
+                        <input type="reset" value="취소" class="btn btn-danger" onclick="window.history.back();">
+                        <input type="submit" value="상품수정" class="btn btn-primary">
+                        <a th:href="@{product/productList}"  type="button" class="btn btn-secondary" style="float: right;">상품목록</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--footer include--->
+<footer class="footer" id="ft">
+    <div th:insert="~{layout/footer :: footer}"></div>
+</footer>
+
+<!-- script 사용시-->
+<th:block layout:fragment="script">
+
+</th:block>
+</body>
+
+</html>

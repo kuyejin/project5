@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.BoardMapper">
+
+
+    <insert id="insertBoard">
+        insert into board values(default, #{title}, #{content}, default, default)
+    </insert>
+
+    <select id="getBoard" resultType="com.shop.domain.Board">
+        select * from board where bno=#{bno}
+    </select>
+
+    <select id="getBoardList" resultType="com.shop.domain.Board">
+        select * from board order by resdate desc
+    </select>
+
+    <update id="updateBoard">
+        update board set title = #{title} , content=#{content} where bno = #{bno}
+    </update>
+
+    <delete id="deleteBoard">
+        delete from board where bno=#{bno}
+    </delete>
+
+    <!-- 조회수 카운트 -->
+    <update id="updateVisited">
+        update board set visited = visited +1 where bno = #{bno}
+    </update>
+</mapper>
+

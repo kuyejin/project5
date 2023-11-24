@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en">
+
+<!-- head include-->
+<head>
+    <th:block th:insert="~{layout/head.html :: head}"></th:block>
+    <!--css 사용시-->
+    <link type="text/css" rel="stylesheet" th:href="@{/css/css파일이름}">
+    <title> 제목 </title>
+</head>
+
+<body>
+    <!-- header include-->
+    <header class="header" id="hd">
+        <div th:insert="~{layout/header :: header}"></div>
+    </header>
+
+    <!--contens 필수-->
+    <div class="contents">
+
+        내용은 이안에
+
+    </div>
+
+    <!--footer include--->
+    <footer class="footer" id="ft">
+        <div th:insert="~{layout/footer :: footer}"></div>
+    </footer>
+
+    <!-- script 사용시-->
+    <th:block layout:fragment="script">
+
+    </th:block>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.UserMapper">
+    <insert id="userInsert">
+        insert into user values (DEFAULT, #{userId}, #{userName}, #{password}, default, #{email}, #{postcode}, #{addr1}, #{addr2}, #{tel}, default, DEFAULT)
+    </insert>
+    <select id="getUserList" resultType="com.shop.domain.User">
+        select * from user inner join userrole on user.id = userrole.id inner join role on userrole.roleId = role.roleId;
+    </select>
+    <select id="findById" resultType="com.shop.domain.User">
+        select * from user where id = #{id}
+    </select>
+    <select id="findByUserId" resultType="com.shop.domain.User">
+        select * from user where userId = #{userId}
+    </select>
+    <select id="findByEmail" resultType="com.shop.domain.User">
+        select * from user where email = #{email}
+    </select>
+    <select id="getLatestUser" resultType="com.shop.domain.User">
+        select * from user order by id desc limit 0,1
+    </select>
+    <update id="userEdit">
+        update user set userId=#{userId},userName=#{userName},tel=#{tel}, email=#{email}, postcode=#{postcode}, addr1=#{addr1},addr2=#{addr2}  where id=#{id}
+    </update>
+    <insert id="setUserRole">
+        insert into userRole values (#{id}, #{roleId})
+    </insert>
+    <select id="getUserRole">
+        select * from userRole where id = #{id}
+    </select>
+    <!-- 211121 추가 -->
+    <select id="userDetail" resultType="com.shop.domain.User" >
+        select user.id, userId, userName,password, active, email, postcode, addr1, addr2, tel, point, regdate, role.roleName  from user inner join userrole on user.id = userrole.id inner join role on userrole.roleId = role.roleId where user.id = #{id};
+    </select>
+    <select id="userDetailById" resultType="com.shop.domain.User" >
+        select role.id, userId, userName,password, active, email, postcode, addr1, addr2, tel, point, regdate, role.roleName, role.roleId  from user inner join userrole on user.id = userrole.id inner join role on userrole.roleId = role.roleId where user.id = #{id};
+    </select>
+    <select id="getRoleIdById" resultType="int">
+        select roleId from userRole where id =#{id}
+    </select>
+    <select id="getRole">
+        select * from role where roleId=#{roleId}
+    </select>
+    <select id="getActive" resultType="com.shop.domain.User">
+        select active from user where id=#{id}
+    </select>
+    <select id="getByuserId" resultType="com.shop.domain.User">
+        select * from user where userId=#{userId}
+    </select>
+    <update id="userDelete">
+        update user set active=#{active} where id=#{id}
+    </update>
+    <select id="idDupCheck" resultType="int">
+        select count(*) from user where userId = #{userId}
+    </select>
+    <!-- 권한 변경 -->
+    <update id="editUserRole">
+        update userRole set roleId=#{roleId} where id=#{id}
+    </update>
+    <!-- c -->
+</mapper>

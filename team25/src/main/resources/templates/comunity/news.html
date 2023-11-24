@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en">
+
+<!-- head include-->
+<head th:replace="~{layout/head.html :: head}">
+    <title>언론보도</title>
+</head>
+
+
+<body>
+    <!-- header include-->
+    <header class="header" id="hd">
+        <div th:insert="~{layout/header :: header}"></div>
+    </header>
+
+    <!--contens 필수-->
+    <div class="contents">
+        <section class="section mb-5 blog-wrap news_area">
+            <h2 class="subtitle">언론보도<a th:href="@{/newsCrawler}" class="delete is-large news"></a></h2>
+            <div class="columns">
+                <div th:each="news : ${newsList}" class="column is-3">
+                    <a th:href="${news.href}" target="_blank">
+                        <div class="card" style="height:400px;overflow:hidden;">
+                            <div class="card-image">
+                                <figure class="image is-4by3">
+                                    <img th:src="${news.img}" alt="News Image">
+                                </figure>
+                            </div>
+                            <div class="media p-2 m-0">
+                                <p class="title is-4">
+                                    <span th:utext="${#strings.length(news.title) gt 20} ? ${#strings.substring(news.title, 0, 20)} + '...' : ${news.title}"></span>
+                                </p>
+                            </div>
+                            <div class="content p-2">
+                                <span th:utext="${#strings.length(news.content) gt 70} ? ${#strings.substring(news.content, 0, 70)} + '...' : ${news.content}"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!--footer include--->
+    <footer class="footer" id="ft">
+        <div th:insert="~{layout/footer :: footer}"></div>
+    </footer>
+
+</body>
+
+</html>

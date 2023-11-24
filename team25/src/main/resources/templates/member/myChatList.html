@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head th:replace="~{layout/head.html :: head}">
+    <title>타이틀</title>
+    <style>
+        .chat-box {
+            margin: 0;
+        }
+        .chat-time {
+            display: inline;
+            margin-left: 10px;
+            color: gray;
+            font-size: 10px;
+        }
+        .close-tag {
+            color: inherit;
+        }
+        .chat-message-me {
+            border-radius: 15px; background-color: green; color: white; float: right; width: fit-content; max-width: 450px;
+        }
+        .chat-message-other{
+            border-radius: 15px; background-color: rgba(57, 192, 237,.2); max-width: 450px;
+        }
+        .chat-message{
+            white-space: pre-wrap;
+        }
+
+        #roomList {
+            height: 50px;
+            font-size: 24px;
+            background-color: #de3b48;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+            border-radius: 20px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div th:insert="~{layout/header :: header}"></div>
+<div class="contents">
+    <div class="container">
+        <div class="row">
+            <div >
+                <h1 th:text="${userId}+'님의 채팅방 목록'"/>
+<!--                <ul class="list-group" id="roomList" style="margin: 10px 0;" th:each="rooms : ${rooms}">-->
+<!--                    <li class="list-group-item"><a th:href="@{/chat/roomEnter(buyer=${userId}, pno=${rooms.pno})}" th:text="${userId}"></a></li>-->
+<!--                </ul>-->
+
+                <ul id="roomList" style="height: 50px;font-size: 24px;background-color: #de3b48;color: #FFFFFF;margin: 20px; border-radius: 20px;" th:each="cr : ${rooms}">
+                    <li id="mychat" class="list-group-item" style="background-color: #2e6da4;border-radius: 20px;" th:if="${cr.buyer eq userId}">
+                        <a th:href="@{/member/myChat(buyer=${cr.buyer}, pno=${cr.pno})}" th:text="${cr.seller}+'님과의 채팅방'"></a>
+                        <!-- 내가 구매자일때의 채팅방 -->
+                    </li>
+                    <li id="mychat" class="list-group-item" th:if="${cr.buyer != userId}">
+                        <a th:href="@{/member/myChat(buyer=${cr.buyer}, pno=${cr.pno})}" th:text="${cr.buyer}+'님과의 채팅방'"></a>
+                        <!-- 내가 판매자일때의 채팅방 -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

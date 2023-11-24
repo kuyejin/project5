@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div th:replace="/include/head.html :: head"></div>
+    <title>타이틀</title>
+    <style>
+        .chat-box {
+            margin: 0;
+        }
+        .chat-time {
+            display: inline;
+            margin-left: 10px;
+            color: gray;
+            font-size: 10px;
+        }
+        .close-tag {
+            color: inherit;
+        }
+        .chat-message-me {
+            border-radius: 15px; background-color: green; color: white; float: right; width: fit-content; max-width: 450px;
+        }
+        .chat-message-other{
+            border-radius: 15px; background-color: rgba(57, 192, 237,.2); max-width: 450px;
+        }
+        .chat-message{
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="/include/header.html :: header"></div>
+<div class="container contenter">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h4>채팅방 목록</h4>
+                <ul class="list-group" id="roomList" style="margin: 10px 0;" th:each="room : ${rooms}">
+                    <li class="list-group-item"><a th:href="@{/chat/roomEnter(buyer=${room.buyer}, pno=${pno})}" th:text="${room.buyer}"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.PayMapper">
+    <insert id="payInsert">
+        insert into pay values (default, #{userId}, #{pno},#{price}, #{userName},#{email},#{postcode}, #{addr1}, #{addr2}, #{tel}, default, "", "", default )
+    </insert>
+    <select id="getPay" resultType="com.shop.domain.Pay">
+        select * from pay where pno = #{pno };
+    </select>
+    <select id="myPayListByUserId" resultType="com.shop.domain.Pay">
+        SELECT payNo, userId, product.pno, pay.price,pname, userName, ship, scode, sname, pay.resdate, status, imgsrc1
+        FROM pay
+                 INNER JOIN product ON pay.pno = product.pno
+        WHERE pay.userId = #{userId}
+        ORDER BY pay.resdate DESC;
+    </select>
+    <update id="updateShip">
+        update pay set ship = #{ship} where payNo = #{payNo}
+    </update>
+    <update id="updatePayByPno">
+        update pay set ship = 2, scode=#{scode}, sname=#{sname} where pno = #{pno}
+    </update>
+</mapper>

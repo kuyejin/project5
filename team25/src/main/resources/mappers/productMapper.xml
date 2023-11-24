@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.ProductMapper">
+
+    <select id="findAll" resultType="com.shop.domain.Product">
+        select * from product order by resdate desc
+    </select>
+
+    <select id="getProduct" resultType="com.shop.domain.Product">
+        select * from product where pno = #{pno}
+    </select>
+
+    <select id="findByPno" resultType="com.shop.domain.Product">
+        select * from product where pno = #{pno}
+    </select>
+
+
+    <select id="findByUserId" resultType="com.shop.domain.Product">
+        select * from product where seller = #{seller} order by resdate desc
+    </select>
+
+
+    <insert id="save">
+        insert into product values (default, #{cateno}, #{pname},#{pcomment}, #{price}, #{seller} , #{quantity}, #{quality}, default, #{imgsrc1},#{imgsrc2}, #{imgsrc3},#{imgsrc4},  default  )
+    </insert>
+
+
+    <select id="getLatestproduct" resultType="com.shop.domain.Product">
+        select * from product order by id desc limit 0,1
+    </select>
+
+
+    <update id ="updateProduct">
+        UPDATE product SET cateno=#{cateno}, pname=#{pname}, pcomment=#{pcomment}, price=#{price}, quantity=#{quantity}, quality=#{quality}, imgsrc1=#{imgsrc1}, imgsrc2=#{imgsrc2}, imgsrc3=#{imgsrc3}, imgsrc4=#{imgsrc4} WHERE pno=#{pno}
+    </update>
+
+    <delete id="deleteProduct">
+        delete from product where pno = #{pno}
+    </delete>
+
+
+    <update id="updateStatus" parameterType="map">
+        update product
+        <set>
+            <choose>
+                <when test="num == 1">
+                    status = '판매완료'
+                </when>
+                <when test="num == 2">
+                    status = '예약중'
+                </when>
+            </choose>
+        </set>
+        where pno = #{pno}
+    </update>
+
+
+
+
+    <!-- 좋아요 카운트-->
+    <select id="checkLiked" resultType="integer">
+        SELECT count(*) FROM likes WHERE userId = #{userId} AND pno = #{pno}
+    </select>
+
+
+    <!--좋아요 추가-->
+    <insert id="addLike">
+        iNSERT INTO likes(userId, pno) VALUES(#{userId}, #{pno})
+    </insert>
+
+
+
+    <!-- 좋아요 취소-->
+    <delete id="removeLike">
+        DELETE FROM likes WHERE userId = #{userId} AND pno = #{pno}
+    </delete>
+
+
+    <!--좋아요 누른 상품의 id 목록 반환-->
+    <select id="getLikedProductsByUser" resultType="long">
+        SELECT pno FROM likes WHERE userId = #{userId}
+    </select>
+
+
+    <!--유저의 좋아요 목록 출력-->
+    <select id="getByIdLikeList" resultType="com.shop.domain.Likes">
+        select * from likes where userId=#{userId}
+    </select>
+
+
+    <!-- 상품별 좋아요 카운트 수 졍렬-->
+    <select id="orderbyPnoCount" resultType="com.shop.domain.Product">
+        SELECT l.pno, COUNT(l.pno) AS cnt, l.userId, l.liketime,  p.cateno, p.pname, p.pcomment, p.price, p.imgsrc1, p.imgsrc2, p.imgsrc3, p.imgsrc4, p.quality, p.status
+        FROM likes l, product p WHERE l.pno = p.pno
+        GROUP BY l.pno order by cnt desc;
+    </select>
+
+    <!-- 상품 끌어올리기 -->
+    <update id="updateResdate">
+        UPDATE product SET resdate = current_timestamp WHERE pno = #{pno};
+    </update>
+
+
+    <update id="updateProductStatus">
+        update product set status = #{status} where pno = #{pno}
+    </update>
+</mapper>
+

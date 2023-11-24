@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<!-- HEADER -->
+<header>
+    <!-- TOP HEADER -->
+    <div id="top-header">
+        <div class="container">
+            <!--<ul class="header-links pull-left">
+            <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
+            <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
+            <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+        </ul>-->
+            <ul sec:authorize="isAnonymous()" class="header-links pull-right">
+                <li><a th:href="@{/member/login}">로그인 </a></li>
+                <li><a th:href="@{/member/join}">회원가입</a></li>
+                <li><a th:href="@{/board/boardList}">공지사항</a></li>
+            </ul>
+            <ul sec:authorize="hasAuthority('USER')" class="header-links pull-right">
+                <li><a th:href="@{/member/logout}">로그아웃</a></li>
+                <li><a th:href="@{/member/loginInfo}">마이페이지</a></li>
+                <li><a th:href="@{/board/boardList}">공지사항</a></li>
+            </ul>
+            <ul sec:authorize="hasAuthority('TEACHER')" class="header-links pull-right">
+                <li><a th:href="@{/member/logout}">로그아웃</a></li>
+                <li><a th:href="@{/member/loginInfo}">마이페이지</a></li>
+                <li><a th:href="@{/board/boardList}">공지사항</a></li>
+            </ul>
+            <ul sec:authorize="hasAuthority('ADMIN')" class="header-links pull-right">
+                <li><a th:href="@{/member/logout}">로그아웃</a></li>
+                <li><a th:href="@{/admin/home}">관리자페이지</a></li>
+                <li><a th:href="@{/board/boardList}">공지사항</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /TOP HEADER -->
+
+    <!-- MAIN HEADER -->
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a th:href="@{/}" class="logo">
+                            <img th:src="@{/images/main_logo_black.png}" style="width: 200px;" alt="">
+                        </a>
+                    </div>
+                </div>
+                <!-- /LOGO -->
+
+                <!-- SEARCH BAR -->
+                <!--    <div class="col-md-6">
+                        <div class="header-search">
+                            <form>
+                                &lt;!&ndash;  <select class="input-select">
+                                  <option value="0">All Categories</option>
+                                  <option value="1">Category 01</option>
+                                  <option value="1">Category 02</option>
+                              </select>&ndash;&gt;
+                                <input class="input" placeholder="상품명 입력">
+                                <button class="search-btn">Search</button>
+                            </form>
+                        </div>
+                    </div>-->
+                <!-- /SEARCH BAR -->
+
+                <div class="col-md-6 keyjxL">
+                    <div class="header-search">
+                        <input type="text" placeholder="상품명 입력" maxlength="40" class="cLfdog " value="">
+                        <a class="">
+                            <img th:src="@{/images/search.png}" width="16" height="16" alt="검색 버튼 아이콘">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ACCOUNT -->
+                <div class="col-md-3 clearfix">
+                    <div class="header-ctn">
+                        <!-- Wishlist -->
+                        <div>
+                            <a th:href="@{/product/productList}">
+                                <!-- <i class="fa fa-heart-o"></i>-->
+                                <img th:src="@{/images/header_product.png}" style="width: 25px">
+                                <span>상품</span>
+                            </a>
+                        </div>
+                        <!-- /Wishlist -->
+
+
+
+                        <!-- Cart -->
+                        <div>
+                            <!-- 로그인되지 않았을 때 -->
+                            <a th:if="${#authorization.expression('isAnonymous()')}" th:href="@{/member/login}">
+                                <img th:src="@{/images/header_product.png}" style="width: 25px">
+                                <span>내상점</span>
+                            </a>
+
+                            <!-- 로그인되었을 때 -->
+                            <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/member/myProList}">
+                                <img th:src="@{/images/header_product.png}" style="width: 25px">
+                                <span>내상점</span>
+                            </a>
+                        </div>
+
+
+                        <!-- /Cart -->
+
+
+                        <!-- Wishlist -->
+                        <div>
+                            <a th:href="@{/member/myChatList}">
+                                <!--<i class="fa fa-heart-o"></i>-->
+                                <img th:src="@{/images/header_talk.png}" style="width: 25px">
+                                <span>셀파톡</span>
+                            </a>
+                        </div>
+                        <!-- /Wishlist -->
+
+
+                        <!-- Menu Toogle -->
+                        <div class="menu-toggle">
+                            <a href="#">
+                                <i class="fa fa-bars"></i>
+                                <span>Menu</span>
+                            </a>
+                        </div>
+                        <!-- /Menu Toogle -->
+
+                    </div>
+                </div>
+                <!-- /ACCOUNT -->
+            </div>
+            <!-- row -->
+
+        </div>
+        <!-- container -->
+    </div>
+    <!-- /MAIN HEADER -->
+
+    <!-- NAVIGATION -->
+    <nav id="navigation">
+
+<!--
+        <div class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown link
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+        </div>
+-->
+
+
+        <!-- container -->
+        <div class="container">
+            <!-- responsive-nav -->
+            <div id="responsive-nav">
+                <!-- NAV -->
+                <ul class="main-nav nav navbar-nav">
+                    <li class="active"><img th:src="@{/images/icon/icon_menu.png}" style=" margin: 10px;width: 20px;
+}"></a></li>
+                    <!-- <li><a href="#">Hot Deals</a></li>
+                     <li><a href="#">Categories</a></li>
+                     <li><a href="#">Laptops</a></li>
+                     <li><a href="#">Smartphones</a></li>
+                     <li><a href="#">Cameras</a></li>
+                     <li><a href="#">Accessories</a></li>-->
+                </ul>
+                <!-- /NAV -->
+            </div>
+            <!-- /responsive-nav -->
+        </div>
+        <!-- /container -->
+    </nav>
+    <!-- /NAVIGATION -->
+
+</header>
+<!-- /HEADER -->
+
+
+

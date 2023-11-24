@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:www.thymeleaf.org">
+<head th:replace="~{layout/admin/head.html :: head}">
+    <title> 회원 상세보기 </title>
+</head>
+<body class="sb-nav-fixed">
+<header class="header" id="hd">
+    <div th:insert="~{layout/admin/header :: header}"></div>
+</header>
+<div class="side" id="side">
+    <div th:insert="~{layout/admin/sidebar :: #layoutSidenav}"></div>
+</div>
+<div id="layoutSidenav_content">
+    <div class="container-fluid px-4">
+        <form th:action="@{'/admin/update/'+${user.id}}" method="post">
+            <div class="table_form_wrap" style="margin-left: 800px; margin-top: 200px">
+                <table class="table-borderless">
+                    <tbody>
+                        <tr>
+                            <th>
+                                <label for="userId">아이디</label>
+                            </th>
+                            <td>
+                                <input type="text" id="userId" name="userId" class="form-control" th:value="${user.userId}" readonly/>
+
+                            </td>
+                        </tr>
+                    <tr>
+                        <th>
+                            <label for="userName">이름</label>
+                        </th>
+                        <td>
+                            <input type="text" class="form-control" name="userName" id="userName" th:value="${user.userName}" required >
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="tel">전화번호</label></th>
+                        <td><input class="form-control" type="text" id="tel"  name="tel" th:value="${user.tel}" required>
+
+                    </tr>
+                    <tr>
+                        <th><label for="email">이메일</label></th>
+                        <td><input class="form-control" type="text" id="email" name="email" th:value="${user.email}" required>
+
+                    </tr>
+                        <tr>
+                            <th>회원권한</th>
+                            <td>
+                                <select name="roleId" id="roleId" required>
+                                    <option value="${userRole.roleId}">
+                                        <th:block th:switch="${userRole.roleId}">
+                                            <em th:case="2">TEACHER</em>
+                                            <em th:case="5">USER</em>
+                                        </th:block>
+                                    </option>
+                                    <option value="2">TEACHER</option>
+                                    <option value="5">USER</option>
+                                </select>
+                            </td>
+                        </tr>
+                    <tr>
+                        <th><label for="postcode">우편번호</label></th>
+
+                        <td>
+                            <button type="button" id="post_btn" onclick="findAddr()" class="button is-link is-size-6">우편번호 검색</button>
+                            <input class="form-control" type="text" id="postcode" name="postcode" th:value="${user.postcode}" required>
+                            <input class="form-control" type="text" id="addr1" name="addr1" th:value="${user.addr1}" required>
+                            <input class="form-control" type="text" id="addr2" name="addr2" th:value="${user.addr2}">
+                        </td>
+                    </tr>
+                    <td>
+                        <input type="submit" class="btn" value="수정하기">
+                        <a th:href="@{/member/userDetail/{id}}" class="btn" th:text="취소하기"></a>
+                    </td>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+<th:block th:fragment="script">
+    <script type="text/javascript">
+        function findAddr(){
+            new daum.Postcode({
+                oncomplete:function(data){
+                    var roadAddr = data.roadAddress;
+                    var jibunAddr = data.jibunAddress;
+                    document.getElementById("postcode").value = data.zonecode;
+                    if(roadAddr !== ''){
+                        document.getElementById("addr1").value = roadAddr;
+                    } else if(jibunAddr !== ''){
+                        document.getElementById("addr1").value = jibunAddr;
+                    }
+                    document.getElementById("addr2").focus();
+                }
+            }).open();
+        }
+    </script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</th:block>
+</body>
+</html>

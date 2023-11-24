@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en">
+
+<!-- head include-->
+<head>
+    <th:block th:insert="~{layout/head.html :: head}"></th:block>
+    <!--css 사용시-->
+    <link type="text/css" rel="stylesheet" th:href="@{/css/css파일이름}">
+    <title> 제목 </title>
+
+    <style>
+
+        #myform fieldset {
+            display: inline-block;
+            direction: rtl;
+            border: 0;
+        }
+
+        #myform fieldset legend {
+            text-align: right;
+        }
+
+        #myform input[type=radio] {
+            display: none;
+        }
+
+        #myform span {
+            font-size: 3em;
+            color: transparent;
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+
+
+        #myform input[type=radio]:checked ~ label {
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+
+        #reviewContents {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: solid 1.5px #D3D3D3;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: none;
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+    <!-- header include-->
+    <header class="header" id="hd">
+        <div th:insert="~{layout/header :: header}"></div>
+    </header>
+
+    <!--contens 필수-->
+    <div class="contents">
+
+        <div class="container" style="width: 50%;">
+
+
+
+            <div class="product"  style="width: 100px; float: left">
+                <div class="product-img" th:each="product: ${product}">
+                    <a th:href="@{'/product/getProduct/' + ${product.pno}}" >
+                        <img th:src="@{'/upload/' + ${product.getImgsrc1()}}" style="width: 100px" alt="">
+                    </a>
+                </div>
+            </div>
+
+            <div class="product-body">
+                <h3 class="product-name" th:text="${product.getPname()}" style=" margin-top: 70px; margin-left: 120px;"><a
+                        href="#">상품이름</a></h3>
+            </div>
+
+
+
+            <div class="mb-3" th:each="review: ${review}" style="clear: both;" >
+                <div class="text-bold" id="myform" >
+                    <span th:if="${review.getScore() == 5}">★★★★★</span>
+                    <span th:if="${review.getScore() == 4}">★★★★</span>
+                    <span th:if="${review.getScore() == 3}">★★★</span>
+                    <span th:if="${review.getScore() == 2}">★★</span>
+                    <span th:if="${review.getScore() == 1}">★</span>
+
+                </div>
+
+                <div class="col-auto form-control" type="text" name="content" id="reviewContents" rows="8"
+                          cols="50" maxlength="500"  th:text="${review.getContent()}">
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--footer include--->
+    <footer class="footer" id="ft">
+        <div th:insert="~{layout/footer :: footer}"></div>
+    </footer>
+
+    <!-- script 사용시-->
+    <th:block layout:fragment="script">
+
+    </th:block>
+</body>
+
+</html>
