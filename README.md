@@ -1,8 +1,7 @@
 # 천재교육 풀스택 과정 5차 프로젝트 
 <br/>
 
-![image](https://github.com/kuyejin/project5/assets/65212187/1e45a588-4e47-432c-89f8-e4bc5f8ad164)
-
+![제목을-입력해주세요_-001 (1)](https://github.com/kuyejin/project5/assets/65212187/6e7326b1-85d5-4456-8234-bc298911e112)
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -26,16 +25,12 @@ T셀파몰 사이트에서 판매하거나 구매할 수 있습니다.  <br/>
 
 
 
-  # 👤 팀원 소개
-![image](https://github.com/kuyejin/project5/assets/65212187/e36fb3bc-0669-43e9-ada6-df982d4fbe20)
-​
-<br/>
-​
+
 # 🗓 개발일정
-![image](https://github.com/kuyejin/project5/assets/65212187/82364842-c872-40bc-899b-020029938691)
+23.11.01- 23.11.10
 <br/>
 ​
-# 🗓 WBS
+
 
 
 <br/>
@@ -64,29 +59,31 @@ T셀파몰 사이트에서 판매하거나 구매할 수 있습니다.  <br/>
 
 
 ## 1️⃣ 요구사항 분석
-![image](https://github.com/kuyejin/project5/assets/65212187/665f5100-4111-4702-bc66-bf21463c5ebc)
-![image](https://github.com/kuyejin/project5/assets/65212187/721900d8-9c95-405d-b78e-505ccd76581d)
-![image](https://github.com/kuyejin/project5/assets/65212187/0aa96e3e-651e-4878-b037-11bcc1b271de)
+![image](https://github.com/kuyejin/project5/assets/65212187/b5b67f15-44eb-49c8-b361-6afa73a056c1)
+![image](https://github.com/kuyejin/project5/assets/65212187/6cac4113-98c0-4074-83de-457710d05214)
+![image](https://github.com/kuyejin/project5/assets/65212187/735dff78-7bf1-4171-8d83-33d209c3f24b)
 <br/>
 
 ## 2️⃣ 유즈케이스
-![pro05UCD drawio](https://github.com/kuyejin/project5/assets/65212187/d489bc83-8ab8-433d-9eb8-002e5659582f)
+![pro05UCD drawio](https://github.com/kuyejin/project5/assets/65212187/4b590444-fa60-4e50-96d1-1616a3e27858)
 <br/>
 
 ## 3️⃣ DB테이블
-![슬라이드1](https://github.com/kuyejin/project5/assets/65212187/19356d92-583f-4600-84bc-d929122cd441)
-![슬라이드2](https://github.com/kuyejin/project5/assets/65212187/66eff9f8-e58d-4855-84fe-439dcc06ce10)
-![슬라이드3](https://github.com/kuyejin/project5/assets/65212187/0fd7036f-caf9-483f-854a-fc8c120df05d)
-![슬라이드4](https://github.com/kuyejin/project5/assets/65212187/8db2cd98-ef78-400d-8f67-768f3148dd17)
-![슬라이드5](https://github.com/kuyejin/project5/assets/65212187/691e4526-5624-4eb3-9386-5f8cbf594bef)
-![슬라이드6](https://github.com/kuyejin/project5/assets/65212187/d6692221-8ac8-487b-9236-a3fe89711fde)
-![슬라이드7](https://github.com/kuyejin/project5/assets/65212187/f8fbbbcc-caba-4b9a-a261-56e9c27290eb)
-![슬라이드8](https://github.com/kuyejin/project5/assets/65212187/d080800e-a531-493a-9e49-76e8465de3e1)
-![슬라이드9](https://github.com/kuyejin/project5/assets/65212187/9757fee0-da47-486b-8358-8a00a1d6eb23)
+![슬라이드1](https://github.com/kuyejin/project5/assets/65212187/dd18eded-87f9-40de-832e-8defb9650058)
+![슬라이드2](https://github.com/kuyejin/project5/assets/65212187/e1d6a62a-cd61-4ea5-a6e9-34f47c2f2090)
+![슬라이드3](https://github.com/kuyejin/project5/assets/65212187/161df27f-540f-49da-857d-efe85fedde58)
+![슬라이드4](https://github.com/kuyejin/project5/assets/65212187/5fa3a7e8-5d30-45ac-834f-30b340679169)
+![슬라이드5](https://github.com/kuyejin/project5/assets/65212187/1ba6a366-eefd-4c63-81d4-2ecf41063637)
+![슬라이드6](https://github.com/kuyejin/project5/assets/65212187/2f11d2fd-1ac4-499f-9d1c-d250f2de1137)
+![슬라이드7](https://github.com/kuyejin/project5/assets/65212187/7379c897-2109-48db-baba-04390f4b159d)
+![슬라이드8](https://github.com/kuyejin/project5/assets/65212187/8741e076-dc3b-4ace-997c-aba2acef94ef)
+![슬라이드9](https://github.com/kuyejin/project5/assets/65212187/273850ed-9ce4-4b86-a85d-a9266e26da2d)
+
 <br/>
 
 ## 📐  클래스 다이어그램
 
 
 ##  💻 화면 이미지
-​
+🔹메인페이지🔹
+​![image](https://github.com/kuyejin/project5/assets/65212187/41dea087-dfc7-4c66-9eec-2182231c4828)
